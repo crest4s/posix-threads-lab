@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -pthread
 TARGET = simula_car
-SRC = simula_car-c
+SRC = simula_car.c
 HEADERS = simula_car.h
 
 .PHONY: all clean

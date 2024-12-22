@@ -1,17 +1,9 @@
-#include <pthread.h>
+#include "simula_car.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#define N_COCHES 8
-
-// Tipo de datos que representa un coche
-typedef struct 
-{
-    int id;
-    char *cadena;
-} coche_t;
 
 // Array de datos de tipo coche_t
 coche_t Coches[N_COCHES];
@@ -24,7 +16,6 @@ pthread_mutex_t mutexClasificacion = PTHREAD_MUTEX_INITIALIZER;
 // Funcion ejecutada por los hilos
 void *funcion_coche(coche_t *pcoche)
 {
-    coche_t *pcoche = (coche_t *)arg;
     int aleatorio;
     unsigned int semilla = (pcoche->id) + pthread_self(); // semilla generacion num. aleatorios
 
@@ -65,9 +56,9 @@ int main(void)
         /* CODIGO 1 */
         Coches[i].id = i;
         Coches[i].cadena = (char *)malloc(20* sizeof(char));
-        snprintf(Coches[i].cadena, "Coche_%d", i);
+        snprintf(Coches[i].cadena, 20, "Coche_%d", i);
 
-        if (pthread_create(&hilosCoches[i], NULL, funcion_coche, (void *)&Coches[i]) != 0)
+        if (pthread_create(&hilosCoches[i], NULL, (void*(*)(void *))funcion_coche, (void *)&Coches[i]) != 0)
        	{
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
