@@ -34,7 +34,6 @@ void *funcion_coche(coche_t *pcoche)
 
     pthread_mutex_lock(&mutexClasificacion);
     clasificacionFinal[finalCarrera++] = pcoche->id;
-    finalCarrera++;
     pthread_mutex_unlock(&mutexClasificacion);
 
     /* CODIGO 2 */
