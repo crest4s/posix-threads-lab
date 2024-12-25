@@ -10,8 +10,9 @@ coche_t Coches[N_COCHES];
 volatile int clasificacionFinal[N_COCHES];
 volatile int finalCarrera = 0;
 
-// Mutex para controlar el acceso a la clasificacion
+// Mutex para controlar el acceso a la clasificacion y la salida
 pthread_mutex_t mutexClasificacion = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutexSalida = PTHREAD_MUTEX_INITIALIZER;
 
 // Funcion ejecutada por los hilos
 void *funcion_coche(coche_t *pcoche)
@@ -19,19 +20,21 @@ void *funcion_coche(coche_t *pcoche)
     int aleatorio;
     unsigned int semilla = (pcoche->id) + pthread_self(); // semilla generacion num. aleatorios
 
+    pthread_mutex_lock(&mutexSalida);
     printf("Salida de %s %d\n", pcoche->cadena, pcoche->id);
-    
     fflush (stdout);
+    pthread_mutex_unlock(&mutexSalida);
 
     // generar numero aleatorios con funcion re-entrante rand_r()    
     aleatorio = rand_r(&semilla) % 10;
-
     sleep(aleatorio);
  
+    pthread_mutex_lock(&mutexSalida);
     printf("Llegada de %s %d\n", pcoche->cadena, pcoche->id);
-
+    fflush(stdout);
+    pthread_mutex_unlock(&mutexSalida);
+    
     /* CODIGO 4 */
-
     pthread_mutex_lock(&mutexClasificacion);
     clasificacionFinal[finalCarrera++] = pcoche->id;
     pthread_mutex_unlock(&mutexClasificacion);
