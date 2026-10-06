@@ -35,8 +35,7 @@ Posicion 1: Coche_3
 p3/
 ├── simula_car.c          # threads, mutexes and ranking
 ├── simula_car.h          # car type, shared data and prototypes
-├── makefile
-└── archivos_apoyo_pract3/ejecutarincompleto2.c   # support file used during the lab
+└── makefile
 ```
 
 ## Authors
