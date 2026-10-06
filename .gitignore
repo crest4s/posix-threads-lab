@@ -1,0 +1,8 @@
+# Build output
+p3/simula_car
+*.o
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
