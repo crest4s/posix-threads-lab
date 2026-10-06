@@ -6,7 +6,7 @@ Lab 3 of the *Sistemas Operativos* (Operating Systems) course at the University 
 
 ## Build and run
 
-Requires Linux (or any POSIX system) with `gcc` and `make`:
+Requires Linux with `gcc` and `make` (it does not build on macOS, where `pthread_t` is a pointer type):
 
 ```bash
 cd p3
